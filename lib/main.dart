@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:abi/Secondpage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -65,10 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
 
-              Text(
-                "Let’s Start",
-                style: TextStyle(color: Colors.white, fontSize: 28),
-              ),
               SizedBox(height: 10),
 
               Image.asset("assets/girl.png"),
@@ -103,7 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(
                 width: 300,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SecondPage() ),
+                    
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(89, 53, 216, 1),
                     foregroundColor: Colors.white,
