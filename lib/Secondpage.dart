@@ -6,6 +6,7 @@ class SecondPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Second Page")),
       body: Center(child: const Text("Вы на второй странице!")),
+
     );
   }
 }
