@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           image: DecorationImage(
 
-            image: AssetImage("assets/main_bg.png"),
+            image: AssetImage("assets/MainBg.png"),
             fit: BoxFit.cover,
 
           ),
@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
               SizedBox(height: 10),
 
-              Image.asset("assets/girl.png"),
+              Image.asset("assets/Girl.png"),
 
               SizedBox(height: 10),
 
@@ -99,6 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
               SizedBox(
                 width: 300,
+
+                // on other page
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => SecondPage() ),
@@ -116,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       const Text("Let’s Start"),
                       const SizedBox(width: 8),
                       Image.asset(
-                        "assets/Arrow - Left.png",
+                        "assets/ArrowRight.png",
                         height: 30,
                         width: 30,
                       ),
