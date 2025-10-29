@@ -106,6 +106,7 @@ class Thirdpage extends StatelessWidget {
                     icon: 'assets/Case.png',
                   ),
 
+
                   const SizedBox(height: 80),
                 ],
               ),
