@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:abi/Thirdpage.dart';
+
 
 class SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/MainBg.png"), // задний фон
@@ -90,7 +93,11 @@ class SecondPage extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Thirdpage() ),
+
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.purple[100],
                           shape: RoundedRectangleBorder(
@@ -217,3 +224,4 @@ class SecondPage extends StatelessWidget {
     );
   }
 }
+

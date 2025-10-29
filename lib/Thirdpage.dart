@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ThirdPage extends StatelessWidget {
+class Thirdpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +12,7 @@ class ThirdPage extends StatelessWidget {
           /// Фон на весь экран
           Positioned.fill(
             child: Image.asset(
-              'assets/main_bg.png',
+              'assets/MainBg.png',
               fit: BoxFit.cover,
             ),
           ),
