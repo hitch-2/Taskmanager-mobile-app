@@ -1,9 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:abi/Thirdpage.dart';
 
+import 'package:abi/services/api_service.dart';
+import 'package:abi/models/project.dart';
 
-class SecondPage extends StatelessWidget {
+
+class SecondPage extends StatefulWidget {
   @override
+  _SecondPageState createState() => _SecondPageState();
+}
+  class _SecondPageState extends State<SecondPage> {
+  final _nameCtrl = TextEditingController(text: 'Grocery Shopping App');
+  final _descCtrl = TextEditingController(text: 'This application is designed for super shops...');
+  bool _loading = false;
+
+  @override
+  void dispose() {
+  _nameCtrl.dispose();
+  _descCtrl.dispose();
+  super.dispose();
+  }
+
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -178,7 +197,7 @@ class SecondPage extends StatelessWidget {
   }
 
   /// Текстовое поле для названия проекта
-  Widget _buildTextField(String label, String value) {
+  Widget _buildTextField(String label, TextEditingController controller) {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -188,19 +207,20 @@ class SecondPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+          Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
           const SizedBox(height: 6),
-          Text(value,
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.bold)),
+          TextField(
+            controller: controller,
+            decoration: const InputDecoration(border: InputBorder.none),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
   }
 
   /// Поле для описания
-  Widget _buildDescriptionField() {
+  Widget _buildDescriptionField(TextEditingController controller) {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -209,15 +229,14 @@ class SecondPage extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            "Description",
-            style: TextStyle(fontSize: 12, color: Colors.grey),
-          ),
-          SizedBox(height: 6),
-          Text(
-            "This application is designed for super shops. By using this application they can enlist all their products in one place and can deliver. Customers will get a one-stop solution for their daily shopping.",
-            style: TextStyle(fontSize: 14),
+        children: [
+          const Text("Description", style: TextStyle(fontSize: 12, color: Colors.grey)),
+          const SizedBox(height: 6),
+          TextField(
+            controller: controller,
+            maxLines: 4,
+            decoration: const InputDecoration(border: InputBorder.none),
+            style: const TextStyle(fontSize: 14),
           ),
         ],
       ),
