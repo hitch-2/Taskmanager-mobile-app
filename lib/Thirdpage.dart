@@ -19,21 +19,21 @@ class _ThirdpageState extends State<Thirdpage> {
 
   Future<void> _loadTasks() async {
     try {
-      final tasks = await ApiService.fetchTasks(); // или fetchTasks(projectId: 1)
+      final tasks = await ApiService
+          .fetchTasks(); // или fetchTasks(projectId: 1)
       setState(() {
         _tasks = tasks;
         _loading = false;
       });
     } catch (e) {
       setState(() => _loading = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Ошибка загрузки: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Ошибка загрузки: $e')));
     }
   }
 
-  @override
+
   Widget build(BuildContext context) {
-    // внутри того же UI, в месте где были статические _buildTaskCard вызовы:
-    // заменяем статично заданные карточки на динамические:
     Widget tasksList;
     if (_loading) {
       tasksList = Center(child: CircularProgressIndicator());
@@ -53,26 +53,17 @@ class _ThirdpageState extends State<Thirdpage> {
         }).toList(),
       );
     }
-    // в основном build — просто вставьте tasksList вместо статичной последовательности карточек.
-  }
 
-  Color _statusColor(String? status) {
-    switch (status) {
-      case 'Done': return Colors.deepPurpleAccent;
-      case 'In Progress': return Colors.orange;
-      case 'To-do': return Colors.blue;
-      default: return Colors.grey;
-    }
-  }
-}
 
-  Widget build(BuildContext context) {
     return Scaffold(
+
+
       // чтобы фон шел за нижним меню
       extendBody: true,
 
       body: Stack(
         children: [
+
           /// Фон на весь экран
           Positioned.fill(
             child: Image.asset(
@@ -88,6 +79,7 @@ class _ThirdpageState extends State<Thirdpage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   /// Верхние иконки
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,7 +106,8 @@ class _ThirdpageState extends State<Thirdpage> {
                       children: [
                         _buildDateTile('May', '23', 'Fri', false),
                         _buildDateTile('May', '24', 'Sat', false),
-                        _buildDateTile('May', '25', 'Sun', true),  // выбранная дата
+                        _buildDateTile('May', '25', 'Sun', true),
+                        // выбранная дата
                         _buildDateTile('May', '26', 'Mon', false),
                         _buildDateTile('May', '27', 'Tue', false),
                       ],
@@ -137,38 +130,7 @@ class _ThirdpageState extends State<Thirdpage> {
                   const SizedBox(height: 20),
 
                   /// Список задач
-                  _buildTaskCard(
-                    project: 'Grocery shopping app design',
-                    title: 'Market Research',
-                    time: '10:00 AM',
-                    status: 'Done',
-                    statusColor: Colors.deepPurpleAccent,
-                    icon: 'assets/Case.png',
-                  ),
-                  _buildTaskCard(
-                    project: 'Grocery shopping app design',
-                    title: 'Competitive Analysis',
-                    time: '12:00 PM',
-                    status: 'In Progress',
-                    statusColor: Colors.orange,
-                    icon: 'assets/Case.png',
-                  ),
-                  _buildTaskCard(
-                    project: 'Uber Eats redesign challange',
-                    title: 'Create Low-fidelity Wireframe',
-                    time: '07:00 PM',
-                    status: 'To-do',
-                    statusColor: Colors.blue,
-                    icon: 'assets/Case.png',
-                  ),
-                  _buildTaskCard(
-                    project: 'About design sprint',
-                    title: 'How to pitch a Design Sprint',
-                    time: '09:00 PM',
-                    status: 'To-do',
-                    statusColor: Colors.blue,
-                    icon: 'assets/Case.png',
-                  ),
+                  tasksList,
 
 
                   const SizedBox(height: 80),
@@ -193,7 +155,8 @@ class _ThirdpageState extends State<Thirdpage> {
   }
 
   /// Виджет даты
-  Widget _buildDateTile(String month, String day, String weekDay, bool selected) {
+  Widget _buildDateTile(String month, String day, String weekDay,
+      bool selected) {
     return Container(
       width: 70,
       margin: const EdgeInsets.only(right: 12),
@@ -282,6 +245,7 @@ class _ThirdpageState extends State<Thirdpage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           /// Название проекта и иконка
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -315,7 +279,8 @@ class _ThirdpageState extends State<Thirdpage> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.access_time, size: 18, color: Colors.deepPurple),
+                  const Icon(
+                      Icons.access_time, size: 18, color: Colors.deepPurple),
                   const SizedBox(width: 4),
                   Text(
                     time,
@@ -327,7 +292,8 @@ class _ThirdpageState extends State<Thirdpage> {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: statusColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
@@ -381,4 +347,4 @@ class _ThirdpageState extends State<Thirdpage> {
       ),
     );
   }
-
+}
