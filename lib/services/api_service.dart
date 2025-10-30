@@ -5,7 +5,7 @@ import '../models/task.dart';
 
 class ApiService {
   // Для AVD используйте 10.0.2.2
-  static const baseUrl = 'http://10.0.2.2:8000';
+  static const String baseUrl = 'http://10.0.2.2:8000';
 
   // Projects
   static Future<List<Project>> fetchProjects() async {
