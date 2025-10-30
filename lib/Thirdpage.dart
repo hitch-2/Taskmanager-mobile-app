@@ -73,6 +73,7 @@ class _ThirdpageState extends State<Thirdpage> {
       body: Stack(
         children: [
 
+
           /// Фон на весь экран
           Positioned.fill(
             child: Image.asset(
