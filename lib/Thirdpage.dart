@@ -34,6 +34,15 @@ class _ThirdpageState extends State<Thirdpage> {
 
 
   Widget build(BuildContext context) {
+    Color _statusColor(String? status) {
+      switch (status) {
+        case 'Done': return Colors.deepPurpleAccent;
+        case 'In Progress': return Colors.orange;
+        case 'To-do': return Colors.blue;
+        default: return Colors.grey;
+      }
+    }
+
     Widget tasksList;
     if (_loading) {
       tasksList = Center(child: CircularProgressIndicator());
