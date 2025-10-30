@@ -134,25 +134,29 @@ class SecondPage extends StatefulWidget {
                   /// Add Project button
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _loading ? null : () async {
+                        setState(() => _loading = true);
+                        try {
+                          final project = Project(name: _nameCtrl.text, description: _descCtrl.text);
+                          final created = await ApiService.createProject(project);
+                          // можно показать SnackBar и вернуться
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Project created: ${created.name}')));
+                          Navigator.pop(context, created); // вернём созданный проект назад
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+                        } finally {
+                          setState(() => _loading = false);
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 80, vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
-                      child: const Text(
-                        "Add Project",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      child: _loading ? CircularProgressIndicator(color: Colors.white) : const Text("Add Project", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                     ),
                   )
+
                 ],
               ),
             ),
