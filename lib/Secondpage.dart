@@ -75,12 +75,13 @@ class SecondPage extends StatefulWidget {
                   const SizedBox(height: 16),
 
                   /// Project Name
-                  _buildTextField("Project Name", "Grocery Shopping App"),
+                  _buildTextField("Project Name", _nameCtrl),
 
                   const SizedBox(height: 16),
 
                   /// Description
-                  _buildDescriptionField(),
+                _buildDescriptionField(_descCtrl),
+
 
                   const SizedBox(height: 16),
 

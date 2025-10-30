@@ -3,8 +3,69 @@ import 'package:abi/services/api_service.dart';
 import 'package:abi/models/task.dart';
 
 
-class Thirdpage extends StatelessWidget {
+class Thirdpage extends StatefulWidget {
   @override
+  _ThirdpageState createState() => _ThirdpageState();
+}
+class _ThirdpageState extends State<Thirdpage> {
+  List<Task> _tasks = [];
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTasks();
+  }
+
+  Future<void> _loadTasks() async {
+    try {
+      final tasks = await ApiService.fetchTasks(); // или fetchTasks(projectId: 1)
+      setState(() {
+        _tasks = tasks;
+        _loading = false;
+      });
+    } catch (e) {
+      setState(() => _loading = false);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Ошибка загрузки: $e')));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // внутри того же UI, в месте где были статические _buildTaskCard вызовы:
+    // заменяем статично заданные карточки на динамические:
+    Widget tasksList;
+    if (_loading) {
+      tasksList = Center(child: CircularProgressIndicator());
+    } else if (_tasks.isEmpty) {
+      tasksList = const Center(child: Text('No tasks'));
+    } else {
+      tasksList = Column(
+        children: _tasks.map((t) {
+          return _buildTaskCard(
+            project: 'Project #${t.projectId}',
+            title: t.title,
+            time: t.time ?? '',
+            status: t.status ?? 'To-do',
+            statusColor: _statusColor(t.status),
+            icon: 'assets/Case.png',
+          );
+        }).toList(),
+      );
+    }
+    // в основном build — просто вставьте tasksList вместо статичной последовательности карточек.
+  }
+
+  Color _statusColor(String? status) {
+    switch (status) {
+      case 'Done': return Colors.deepPurpleAccent;
+      case 'In Progress': return Colors.orange;
+      case 'To-do': return Colors.blue;
+      default: return Colors.grey;
+    }
+  }
+}
+
   Widget build(BuildContext context) {
     return Scaffold(
       // чтобы фон шел за нижним меню
@@ -320,4 +381,4 @@ class Thirdpage extends StatelessWidget {
       ),
     );
   }
-}
+
