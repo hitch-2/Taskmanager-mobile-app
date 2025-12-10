@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:abi/services/api_service.dart';
 import 'package:abi/models/task.dart';
+import 'package:abi/models/project.dart';
 
 
 class Thirdpage extends StatefulWidget {
+  final Project project;
+  const Thirdpage({required this.project, Key? key}) : super(key: key);
+
   @override
   _ThirdpageState createState() => _ThirdpageState();
 }
+
+
 class _ThirdpageState extends State<Thirdpage> {
   List<Task> _tasks = [];
   bool _loading = true;
@@ -19,8 +25,7 @@ class _ThirdpageState extends State<Thirdpage> {
 
   Future<void> _loadTasks() async {
     try {
-      final tasks = await ApiService
-          .fetchTasks(); // или fetchTasks(projectId: 1)
+      final tasks = await ApiService.fetchTasks(projectId: widget.project.id);
       setState(() {
         _tasks = tasks;
         _loading = false;
@@ -52,7 +57,7 @@ class _ThirdpageState extends State<Thirdpage> {
       tasksList = Column(
         children: _tasks.map((t) {
           return _buildTaskCard(
-            project: 'Project #${t.projectId}',
+            project: widget.project.name,
             title: t.title,
             time: t.time ?? '',
             status: t.status ?? 'To-do',
@@ -94,10 +99,12 @@ class _ThirdpageState extends State<Thirdpage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset('assets/ArrowLeft.png', width: 28),
-                      const Text(
-                        "Today's Tasks",
-                        style: TextStyle(
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Image.asset('assets/ArrowLeft.png', width: 28),
+                      ),
+                      Text(widget.project.name,
+                          style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ),

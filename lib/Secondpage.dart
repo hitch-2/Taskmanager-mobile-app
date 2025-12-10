@@ -3,6 +3,8 @@ import 'package:abi/Thirdpage.dart';
 
 import 'package:abi/services/api_service.dart';
 import 'package:abi/models/project.dart';
+import 'TaskCreatePage.dart';
+
 
 
 class SecondPage extends StatefulWidget {
@@ -114,8 +116,12 @@ class SecondPage extends StatefulWidget {
                       const SizedBox(width: 12),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Thirdpage() ),
-
+                          final stubProject = Project(name: 'Stub', description: 'N/A');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Thirdpage(project: stubProject), // <--- ПЕРЕДАЛИ ОБЪЕКТ
+                            ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -142,7 +148,13 @@ class SecondPage extends StatefulWidget {
                           final created = await ApiService.createProject(project);
                           // можно показать SnackBar и вернуться
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Project created: ${created.name}')));
-                          Navigator.pop(context, created); // вернём созданный проект назад
+                          // импорт: import 'package:abi/task_create_page.dart';
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TaskCreatePage(project: created),
+                            ),
+                          );
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
                         } finally {
