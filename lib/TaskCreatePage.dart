@@ -34,27 +34,30 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
     setState(() => _loading = true);
     try {
       final task = Task(
-        projectId: widget.project.id!,
+        projectId: widget.project.id!, // Убедись, что ID проекта не null
         title: _titleCtrl.text.trim(),
         time: _timeCtrl.text.trim(),
         status: _status,
       );
-      final created = await Navigator.pushReplacement(
+
+      // --- ИСПРАВЛЕНИЕ: Сначала сохраняем в БД ---
+      await ApiService.createTask(task);
+      // -------------------------------------------
+
+      if (!mounted) return; // Проверка, что экран еще существует
+
+      // Теперь переходим на экран списка задач
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => Thirdpage(project: widget.project),
         ),
       );
 
-      // Перейдём на Thirdpage показывающую проект и его задачи
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => Thirdpage(project: widget.project)),
-      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Ошибка создания задачи: $e')));
     } finally {
-      setState(() => _loading = false);
+      if (mounted) setState(() => _loading = false);
     }
   }
 

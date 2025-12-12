@@ -6,7 +6,6 @@ import 'package:abi/models/project.dart';
 import 'TaskCreatePage.dart';
 
 
-
 class SecondPage extends StatefulWidget {
   @override
   _SecondPageState createState() => _SecondPageState();
@@ -207,7 +206,10 @@ class SecondPage extends StatefulWidget {
               ],
             ),
           ),
-          Image.asset("assets/ArrowRight.png", width: 20, height: 20),
+          GestureDetector(
+            onTap: () => Navigator.pop(context), // Команда вернуться назад
+            child: Image.asset("assets/ArrowLeft.png", width: 28),
+          ),
         ],
       ),
     );
